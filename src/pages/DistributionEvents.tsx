@@ -13,9 +13,9 @@ import {
 
 export default function DistributionEvents() {
   const [events] = useState([
-    { id: 1, date: "2025-01-20", location: "Community Center", organizedBy: "Food Bank Team A" },
-    { id: 2, date: "2025-01-22", location: "Church Hall", organizedBy: "Volunteers Group B" },
-    { id: 3, date: "2025-01-25", location: "School Gymnasium", organizedBy: "Local NGO" },
+    { event_id: 1, location_name: "Community Center", date_stored: "2025-01-20", notes: "Regular weekly distribution" },
+    { event_id: 2, location_name: "Church Hall", date_stored: "2025-01-22", notes: "Special holiday distribution" },
+    { event_id: 3, location_name: "School Gymnasium", date_stored: "2025-01-25", notes: "Family support program" },
   ]);
 
   return (
@@ -40,19 +40,19 @@ export default function DistributionEvents() {
             <TableHeader>
               <TableRow>
                 <TableHead>Event ID</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Organized By</TableHead>
+                <TableHead>Location Name</TableHead>
+                <TableHead>Date Stored</TableHead>
+                <TableHead>Notes</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {events.map((event) => (
-                <TableRow key={event.id}>
-                  <TableCell>{event.id}</TableCell>
-                  <TableCell className="font-medium">{event.date}</TableCell>
-                  <TableCell>{event.location}</TableCell>
-                  <TableCell>{event.organizedBy}</TableCell>
+                <TableRow key={event.event_id}>
+                  <TableCell>{event.event_id}</TableCell>
+                  <TableCell className="font-medium">{event.location_name}</TableCell>
+                  <TableCell>{event.date_stored}</TableCell>
+                  <TableCell>{event.notes}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon">
                       <Edit className="h-4 w-4" />

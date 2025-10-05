@@ -13,9 +13,9 @@ import {
 
 export default function Storage() {
   const [storages] = useState([
-    { id: 1, location: "Main Warehouse - Building A", capacity: 5000, currentStock: 3750 },
-    { id: 2, location: "Community Center Storage", capacity: 2000, currentStock: 1500 },
-    { id: 3, location: "Cold Storage Unit 1", capacity: 1000, currentStock: 800 },
+    { donor_id: 1, contact_phone: "+1234567890", date_stored: "2025-01-15", notes: "Main warehouse facility for dry goods" },
+    { donor_id: 2, contact_phone: "+1234567891", date_stored: "2025-01-16", notes: "Community center storage for quick distribution" },
+    { donor_id: 3, contact_phone: "+1234567892", date_stored: "2025-01-18", notes: "Cold storage unit for perishable items" },
   ]);
 
   return (
@@ -39,45 +39,30 @@ export default function Storage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Capacity</TableHead>
-                <TableHead>Current Stock</TableHead>
-                <TableHead>Utilization</TableHead>
+                <TableHead>Donor ID</TableHead>
+                <TableHead>Contact Phone</TableHead>
+                <TableHead>Date Stored</TableHead>
+                <TableHead>Notes</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {storages.map((storage) => {
-                const utilization = ((storage.currentStock / storage.capacity) * 100).toFixed(0);
-                return (
-                  <TableRow key={storage.id}>
-                    <TableCell>{storage.id}</TableCell>
-                    <TableCell className="font-medium">{storage.location}</TableCell>
-                    <TableCell>{storage.capacity}</TableCell>
-                    <TableCell>{storage.currentStock}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-muted rounded-full">
-                          <div
-                            className="h-2 bg-primary rounded-full"
-                            style={{ width: `${utilization}%` }}
-                          />
-                        </div>
-                        <span className="text-sm">{utilization}%</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {storages.map((storage) => (
+                <TableRow key={storage.donor_id}>
+                  <TableCell>{storage.donor_id}</TableCell>
+                  <TableCell className="font-medium">{storage.contact_phone}</TableCell>
+                  <TableCell>{storage.date_stored}</TableCell>
+                  <TableCell>{storage.notes}</TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="ghost" size="icon">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

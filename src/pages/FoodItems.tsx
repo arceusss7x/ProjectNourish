@@ -13,9 +13,9 @@ import {
 
 export default function FoodItems() {
   const [items] = useState([
-    { id: 1, donor: "Green Valley", name: "Canned Beans", quantity: 100, unit: "cans", expiry: "2025-12-31", donated: "2025-01-15" },
-    { id: 2, donor: "John Smith", name: "Rice", quantity: 50, unit: "kg", expiry: "2026-06-30", donated: "2025-01-16" },
-    { id: 3, donor: "Fresh Foods", name: "Bread", quantity: 200, unit: "loaves", expiry: "2025-01-25", donated: "2025-01-18" },
+    { item_id: 1, item_id_aid: 1, donor: "Green Valley", item_name: "Canned Beans", category: "Canned Goods", quantity_initial: 100, quantity_available: 85, unit_of_measure: "cans", expiration_date: "2025-12-31", date_received: "2025-01-15" },
+    { item_id: 2, item_id_aid: 2, donor: "John Smith", item_name: "Rice", category: "Grains", quantity_initial: 50, quantity_available: 30, unit_of_measure: "kg", expiration_date: "2026-06-30", date_received: "2025-01-16" },
+    { item_id: 3, item_id_aid: 3, donor: "Fresh Foods", item_name: "Bread", category: "Bakery", quantity_initial: 200, quantity_available: 150, unit_of_measure: "loaves", expiration_date: "2025-01-25", date_received: "2025-01-18" },
   ]);
 
   return (
@@ -39,26 +39,30 @@ export default function FoodItems() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead>Item ID</TableHead>
                 <TableHead>Donor</TableHead>
                 <TableHead>Item Name</TableHead>
-                <TableHead>Quantity</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Qty Initial</TableHead>
+                <TableHead>Qty Available</TableHead>
                 <TableHead>Unit</TableHead>
                 <TableHead>Expiry Date</TableHead>
-                <TableHead>Donated Date</TableHead>
+                <TableHead>Date Received</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {items.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
+                <TableRow key={item.item_id}>
+                  <TableCell>{item.item_id}</TableCell>
                   <TableCell className="font-medium">{item.donor}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.unit}</TableCell>
-                  <TableCell>{item.expiry}</TableCell>
-                  <TableCell>{item.donated}</TableCell>
+                  <TableCell>{item.item_name}</TableCell>
+                  <TableCell>{item.category}</TableCell>
+                  <TableCell>{item.quantity_initial}</TableCell>
+                  <TableCell>{item.quantity_available}</TableCell>
+                  <TableCell>{item.unit_of_measure}</TableCell>
+                  <TableCell>{item.expiration_date}</TableCell>
+                  <TableCell>{item.date_received}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon">
                       <Edit className="h-4 w-4" />

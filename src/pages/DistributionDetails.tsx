@@ -13,9 +13,11 @@ import {
 
 export default function DistributionDetails() {
   const [details] = useState([
-    { id: 1, eventId: 1, eventName: "Community Center Event", foodItem: "Canned Beans", quantity: 50 },
-    { id: 2, eventId: 1, eventName: "Community Center Event", foodItem: "Rice", quantity: 30 },
-    { id: 3, eventId: 2, eventName: "Church Hall Event", foodItem: "Bread", quantity: 100 },
+    { event_id: 1, item_id: 1, event_name: "Community Center", item_name: "Canned Beans", distributed_quantity: 15 },
+    { event_id: 1, item_id: 2, event_name: "Community Center", item_name: "Rice", distributed_quantity: 20 },
+    { event_id: 2, item_id: 3, event_name: "Church Hall", item_name: "Pasta", distributed_quantity: 15 },
+    { event_id: 3, item_id: 4, event_name: "School Gymnasium", item_name: "Fresh Apples", distributed_quantity: 50 },
+    { event_id: 4, item_id: 1, event_name: "Downtown Park", item_name: "Canned Beans", distributed_quantity: 10 },
   ]);
 
   return (
@@ -39,22 +41,22 @@ export default function DistributionDetails() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Detail ID</TableHead>
                 <TableHead>Event ID</TableHead>
+                <TableHead>Item ID</TableHead>
                 <TableHead>Event Name</TableHead>
-                <TableHead>Food Item</TableHead>
-                <TableHead>Quantity Distributed</TableHead>
+                <TableHead>Item Name</TableHead>
+                <TableHead>Distributed Quantity</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {details.map((detail) => (
-                <TableRow key={detail.id}>
-                  <TableCell>{detail.id}</TableCell>
-                  <TableCell>{detail.eventId}</TableCell>
-                  <TableCell className="font-medium">{detail.eventName}</TableCell>
-                  <TableCell>{detail.foodItem}</TableCell>
-                  <TableCell>{detail.quantity}</TableCell>
+              {details.map((detail, index) => (
+                <TableRow key={`${detail.event_id}-${detail.item_id}-${index}`}>
+                  <TableCell>{detail.event_id}</TableCell>
+                  <TableCell>{detail.item_id}</TableCell>
+                  <TableCell className="font-medium">{detail.event_name}</TableCell>
+                  <TableCell>{detail.item_name}</TableCell>
+                  <TableCell>{detail.distributed_quantity}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon">
                       <Edit className="h-4 w-4" />

@@ -13,9 +13,9 @@ import {
 
 export default function Donors() {
   const [donors] = useState([
-    { id: 1, name: "Green Valley Restaurant", type: "Restaurant", contact: "+1234567890", email: "contact@greenvalley.com" },
-    { id: 2, name: "John Smith", type: "Individual", contact: "+1234567891", email: "john@email.com" },
-    { id: 3, name: "Fresh Foods Corp", type: "Company", contact: "+1234567892", email: "info@freshfoods.com" },
+    { donor_id: 1, name: "Green Valley Restaurant", contact_phone: "+1234567890", contact_email: "contact@greenvalley.com" },
+    { donor_id: 2, name: "John Smith", contact_phone: "+1234567891", contact_email: "john@email.com" },
+    { donor_id: 3, name: "Fresh Foods Corp", contact_phone: "+1234567892", contact_email: "info@freshfoods.com" },
   ]);
 
   return (
@@ -39,22 +39,20 @@ export default function Donors() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
+                <TableHead>Donor ID</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Email</TableHead>
+                <TableHead>Contact Phone</TableHead>
+                <TableHead>Contact Email</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {donors.map((donor) => (
-                <TableRow key={donor.id}>
-                  <TableCell>{donor.id}</TableCell>
+                <TableRow key={donor.donor_id}>
+                  <TableCell>{donor.donor_id}</TableCell>
                   <TableCell className="font-medium">{donor.name}</TableCell>
-                  <TableCell>{donor.type}</TableCell>
-                  <TableCell>{donor.contact}</TableCell>
-                  <TableCell>{donor.email}</TableCell>
+                  <TableCell>{donor.contact_phone}</TableCell>
+                  <TableCell>{donor.contact_email}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon">
                       <Edit className="h-4 w-4" />
