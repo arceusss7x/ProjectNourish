@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2 } from "lucide-react";
@@ -10,11 +10,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function FoodItems() {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["food_items"],
@@ -35,6 +48,42 @@ export default function FoodItems() {
       return data || [];
     },
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (foodId: string) => {
+      const { error } = await supabase
+        .from("food_items")
+        .delete()
+        .eq("food_id", foodId);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["food_items"] });
+      toast({
+        title: "Success",
+        description: "Food item deleted successfully",
+      });
+      setDeleteId(null);
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete food item",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDelete = (foodId: string) => {
+    setDeleteId(foodId);
+  };
+
+  const confirmDelete = () => {
+    if (deleteId) {
+      deleteMutation.mutate(deleteId);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -85,10 +134,21 @@ export default function FoodItems() {
                     <TableCell>{item.expiry_date ? new Date(item.expiry_date).toLocaleDateString() : "N/A"}</TableCell>
                     <TableCell>{new Date(item.donation_date).toLocaleDateString()}</TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="icon">
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        onClick={() => toast({
+                          title: "Coming Soon",
+                          description: "Edit functionality will be implemented",
+                        })}
+                      >
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon">
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        onClick={() => handleDelete(item.food_id)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </TableCell>
@@ -99,6 +159,21 @@ export default function FoodItems() {
           </Table>
         </CardContent>
       </Card>
+
+      <AlertDialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete this food item. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
