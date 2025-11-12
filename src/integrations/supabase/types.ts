@@ -44,6 +44,69 @@ export type Database = {
         }
         Relationships: []
       }
+      distribution_details: {
+        Row: {
+          created_at: string
+          detail_id: string
+          event_id: string
+          food_id: string
+          quantity_distributed: number
+        }
+        Insert: {
+          created_at?: string
+          detail_id?: string
+          event_id: string
+          food_id: string
+          quantity_distributed: number
+        }
+        Update: {
+          created_at?: string
+          detail_id?: string
+          event_id?: string
+          food_id?: string
+          quantity_distributed?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "distribution_details_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "distribution_events"
+            referencedColumns: ["event_id"]
+          },
+          {
+            foreignKeyName: "distribution_details_food_id_fkey"
+            columns: ["food_id"]
+            isOneToOne: false
+            referencedRelation: "food_items"
+            referencedColumns: ["food_id"]
+          },
+        ]
+      }
+      distribution_events: {
+        Row: {
+          created_at: string
+          event_date: string
+          event_id: string
+          location: string
+          organized_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_date: string
+          event_id?: string
+          location: string
+          organized_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_date?: string
+          event_id?: string
+          location?: string
+          organized_by?: string | null
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           contact_email: string | null
@@ -83,6 +146,74 @@ export type Database = {
         }
         Relationships: []
       }
+      donors: {
+        Row: {
+          contact_number: string | null
+          created_at: string
+          donor_id: string
+          donor_name: string
+          donor_type: string
+          email: string | null
+        }
+        Insert: {
+          contact_number?: string | null
+          created_at?: string
+          donor_id?: string
+          donor_name: string
+          donor_type: string
+          email?: string | null
+        }
+        Update: {
+          contact_number?: string | null
+          created_at?: string
+          donor_id?: string
+          donor_name?: string
+          donor_type?: string
+          email?: string | null
+        }
+        Relationships: []
+      }
+      food_items: {
+        Row: {
+          created_at: string
+          donation_date: string
+          donor_id: string | null
+          expiry_date: string | null
+          food_id: string
+          item_name: string
+          quantity: number
+          unit: string
+        }
+        Insert: {
+          created_at?: string
+          donation_date?: string
+          donor_id?: string | null
+          expiry_date?: string | null
+          food_id?: string
+          item_name: string
+          quantity: number
+          unit: string
+        }
+        Update: {
+          created_at?: string
+          donation_date?: string
+          donor_id?: string | null
+          expiry_date?: string | null
+          food_id?: string
+          item_name?: string
+          quantity?: number
+          unit?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "food_items_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "donors"
+            referencedColumns: ["donor_id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -104,6 +235,30 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      storage: {
+        Row: {
+          capacity: number
+          created_at: string
+          current_stock: number
+          location: string
+          storage_id: string
+        }
+        Insert: {
+          capacity: number
+          created_at?: string
+          current_stock?: number
+          location: string
+          storage_id?: string
+        }
+        Update: {
+          capacity?: number
+          created_at?: string
+          current_stock?: number
+          location?: string
+          storage_id?: string
         }
         Relationships: []
       }
